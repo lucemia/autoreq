@@ -1,0 +1,16 @@
+# Powerful data structures for data analysis, time series,and statistics
+# https://pypi.python.org/pypi/pandas
+pandas
+
+# HTML parser based on the WHATWG HTML specification
+# https://pypi.python.org/pypi/html5lib
+html5lib
+
+# Convert functions into multi-command program breezily.
+# https://pypi.python.org/pypi/clime
+clime
+
+# Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
+# https://pypi.python.org/pypi/lxml
+lxml
+
