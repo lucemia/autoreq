@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 import pandas
 import re
 import requests
@@ -52,7 +59,7 @@ package_url = 'https://pypi.python.org/pypi/%s/%s'
 
 
 def _parse_package_page(content):
-    soup = BeautifulSoup(content)
+    soup = BeautifulSoup(content, "lxml")
     title = soup.select('.section')[0].select('h1')[0].text
     desp = soup.select(".section")[0].select('p')[0].text
 
@@ -71,7 +78,7 @@ def _parse_index_page(content):
 def _parse_requirment(content):
     lines = content.split('\n')
     packages = []
-    FORMAT = re.compile(r"([\w\-\_]+)((>=|==)([\.\d]+))?")
+    FORMAT = re.compile(r"^([\w\-\_]+)((>=|==)([\.\d\w]+))?$")
 
     for line in lines:
         line = line.strip()
@@ -161,10 +168,10 @@ def fix_lines(source_lines, options, filename=''):
 
         package_url = PACKAGE_URL % (package, version)
 
-        print 'process', package, package_url
+        print('process', package, package_url)
         resp = requests.get(package_url)
 
-        if '<title>Index of Packages : Python Package Index</title>' in resp.content:
+        if u'<title>Index of Packages : Python Package Index</title>' in resp.content.decode('utf8'):
             # it is index page
             df = _parse_index_page(resp.content)
             title = df["Package"][0]
@@ -273,7 +280,9 @@ def create_parser():
     parser.add_argument('-j', '--jobs', type=int, metavar='n', default=1,
                         help='number of parallel jobs; '
                              'match CPU count if value is less than 1')
-
+    parser.add_argument('--exclude', metavar='globs',
+                        help='exclude file/directory names that match these '
+                             'comma-separated globs')
     return parser
 
 
@@ -285,12 +294,17 @@ def decode_filename(filename):
         return filename.decode(sys.getfilesystemencoding())
 
 
+def _split_comma_separated(string):
+    """Return a set of strings."""
+    return set(text.strip() for text in string.split(',') if text.strip())
+
+
 def parse_args(arguments):
     """Parse command-line options."""
     parser = create_parser()
     args = parser.parse_args(arguments)
 
-    if not args.files and not args.list_fixes:
+    if not args.files:
         parser.error('incorrect number of arguments')
 
     args.files = [decode_filename(name) for name in args.files]
@@ -318,6 +332,11 @@ def parse_args(arguments):
 
     if args.in_place and args.diff:
         parser.error('--in-place and --diff are mutually exclusive')
+
+    if args.exclude:
+        args.exclude = _split_comma_separated(args.exclude)
+    else:
+        args.exclude = set([])
 
     if args.jobs < 1:
         # Do not import multiprocessing globally in case it is not supported
