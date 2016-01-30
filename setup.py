@@ -12,7 +12,7 @@ from setuptools import setup
 reqs = []
 with open('requirements.txt') as ifile:
     for i in ifile:
-        if not i.strip()[0] == '#':
+        if i.strip() and not i.strip()[0] == '#':
             reqs.append(i)
 
 INSTALL_REQUIRES = (
