@@ -19,7 +19,7 @@ import os
 import fnmatch
 
 
-__version__ = '2016.01.30'
+__version__ = '2016.01.30.02'
 
 
 url = "https://pypi.python.org/pypi?%3Aaction=index"
@@ -69,7 +69,7 @@ def _parse_package_page(content):
 
 def _parse_index_page(content):
     import cStringIO
-    assert '<title>Index of Packages : Python Package Index</title>' in content
+    assert u'<title>Index of Packages : Python Package Index</title>' in content.decode('utf8')
 
     df = pandas.io.html.read_html(cStringIO.StringIO(content), header=0)
     return df[0]
@@ -215,6 +215,8 @@ def get_diff_text(old, new, filename):
 def fix_file(filename, options=None, output=None):
     if not options:
         options = parse_args([filename])
+
+    print('process', filename)
 
     original_source = readlines_from_file(filename)
     fixed_source = original_source
