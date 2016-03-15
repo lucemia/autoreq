@@ -2,10 +2,11 @@
 
 auto format requirements file
 
-`python auto_requirements.py requirements.txt`
+`autoreq --in-place requirements.txt`
+`autoreq --in-place -r ./`
 
 # Release Log:
-## version 2016.3.15.1
+## version 2016.3.15.3
 1. fix requirements
 2. fix autoreq parsing issues, which will fail while a package name contains '.'
 

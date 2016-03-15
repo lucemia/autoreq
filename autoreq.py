@@ -19,7 +19,7 @@ import os
 import fnmatch
 
 
-__version__ = '2016.3.15.2'
+__version__ = '2016.3.15.3'
 
 
 url = "https://pypi.python.org/pypi?%3Aaction=index"
