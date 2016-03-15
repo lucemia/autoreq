@@ -19,7 +19,7 @@ import os
 import fnmatch
 
 
-__version__ = '2016.01.30.02'
+__version__ = '2016.3.15.3'
 
 
 url = "https://pypi.python.org/pypi?%3Aaction=index"
@@ -78,7 +78,7 @@ def _parse_index_page(content):
 def _parse_requirment(content):
     lines = content.split('\n')
     packages = []
-    FORMAT = re.compile(r"^([\w\-\_]+)((>=|==)([\.\d\w]+))?$")
+    FORMAT = re.compile(r"^([\w\-\_\.]+)((>=|==)([\.\d\w]+))?$")
 
     for line in lines:
         line = line.strip()
@@ -92,6 +92,7 @@ def _parse_requirment(content):
 
         elif _is_package(line) and line[0] != '#':
             package, _, condition, version = FORMAT.findall(line)[0]
+
             packages.append({
                 'type': 'package',
                 'package': package,

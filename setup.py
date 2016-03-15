@@ -6,7 +6,6 @@
 import ast
 import io
 import sys
-import os
 from setuptools import setup
 
 reqs = []
