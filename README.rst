@@ -1,12 +1,19 @@
-# auto-requirements
+auto-requirements
+=================
 
 auto format requirements file
 
-`python auto_requirements.py requirements.txt`
+``python auto_requirements.py requirements.txt``
 
-# Release Log:
-## version 2016.3.15.1
+Release Log:
+============
+
+version 2016.3.15.1
+-------------------
+
 1. fix requirements
-2. fix autoreq parsing issues, which will fail while a package name contains '.'
+2. fix autoreq parsing issues, which will fail while a package name
+   contains ‘.’
 
-thanks cloverhsc report this bug https://github.com/lucemia/autoreq/issues/4
+thanks cloverhsc report this bug
+https://github.com/lucemia/autoreq/issues/4
