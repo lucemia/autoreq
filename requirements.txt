@@ -8,12 +8,17 @@ pandas==0.17.1
 html5lib==0.9999999
 
 
-# Convert functions into multi-command program breezily.
-# https://pypi.python.org/pypi/clime/0.3.1
-clime==0.3.1
-
-
 # Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
 # https://pypi.python.org/pypi/lxml/3.5.0
 lxml==3.5.0
+
+
+# Python HTTP for Humans.
+# https://pypi.python.org/pypi/requests/2.9.1
+requests==2.9.1
+
+
+# Screen-scraping library
+# https://pypi.python.org/pypi/bs4/0.0.1
+bs4==0.0.1
 
